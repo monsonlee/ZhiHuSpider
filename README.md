@@ -5,8 +5,8 @@ src/main/java/crawler<br/>
            ----------Spider.java         爬虫入口<br/>
 
 src/main/java/domain<br/>
-           ----------Page.java\tPage Bean<br/>
-           ----------User.java\tUser Bean<br/>
+           ----------Page.java           Page Bean<br/>
+           ----------User.java           User Bean<br/>
 
 src/main/java/download<br/>
            ----------DownLoad.java       下载接口<br/>
