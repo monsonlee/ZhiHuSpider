@@ -1,12 +1,13 @@
 # ZhiHuSpider
-HttpcClient+HtmlCleaner+Xpath爬取知乎用户信息以及图片(某一话题下，所有精华问题最高票用户的信息以及用户答案中的所有图片)
+HttpcClient+HtmlCleaner+Xpath爬取知乎用户信息以及图片<br>
+(某一话题下，所有精华问题最高票用户的信息以及用户答案中的所有图片)
 
 src/main/java/crawler<br/>
            ----------Spider.java         爬虫入口<br/>
 
 src/main/java/domain<br/>
-           ----------Page.java           Page Bean<br/>
-           ----------User.java           User Bean<br/>
+           ----------Page.java           网页Page Bean<br/>
+           ----------User.java           用户User Bean<br/>
 
 src/main/java/download<br/>
            ----------DownLoad.java       下载接口<br/>
