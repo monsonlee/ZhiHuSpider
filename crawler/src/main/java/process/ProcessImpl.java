@@ -55,8 +55,10 @@ public class ProcessImpl implements Process {
 					String userHref = "https://www.zhihu.com" + uNode.getAttributeByName("href");
 					String username = uNode.getText().toString();
 
-					logger.info("\n" + currentPage + "问题" + (i + 1) + "：" + question + "\n最高票用户名：" + username
-							+ "\n主页链接：" + userHref + "\n======================================================");
+					question = currentPage + "问题" + (i + 1) + "：" + question;
+					question = question.substring(0, question.length() - 1);
+					logger.info("\n" + question + "\n最高票用户名：" + username + "\n主页链接：" + userHref
+							+ "\n======================================================");
 
 					// 根据url解析用户信息
 					processUser(userHref);
@@ -66,14 +68,14 @@ public class ProcessImpl implements Process {
 					Pattern pattern = Pattern.compile("data-original=&quot;(.*?)&quot;");
 					Matcher matcher = pattern.matcher(answer);
 					int count = 0;
-					question = (currentPage + question).substring(0, (currentPage + question).length() - 1);
+
 					while (matcher.find()) {
 						// 下载图片
 						PictureUtil.downloadPic(matcher.group(1), question, username, ++count);
 					}
 				}
 			} else {
-				String topic = url.substring(url.length() - 2);
+				String topic = url.substring(url.lastIndexOf("=") + 1);
 				Pattern pattern = Pattern
 						.compile("<div\\sclass=\"name\"><a\\shref=\"(.*?)\"\\sclass=\"name-link\"\\sdata-highlight>"
 								+ topic + "</a></div>");
@@ -82,10 +84,20 @@ public class ProcessImpl implements Process {
 					String topicURL = "https://www.zhihu.com" + matcher.group(1) + "/top-answers";
 					DownLoadImpl downLoadPage = new DownLoadImpl();
 					Page userPage = null;
-					// 因为每一话题下，所有精华问题只有50页，所以暂时先搞个for循环，后期优化
-					for (int i = 1; i <= 50; i++) {
-						userPage = downLoadPage.download(topicURL + "?page=" + i);
-						process(userPage);
+					// 下载第1页
+					userPage = downLoadPage.download(topicURL + "?page=" + 1);
+					String userPageContent = userPage.getContent();
+					// 解析总页数
+					pattern = Pattern.compile("\">(.*?)</a></span>\\s+<span><a\\shref=\".*?\">下一页</a>");
+					matcher = pattern.matcher(userPageContent);
+					process(userPage);
+					if (matcher.find()) {
+						int pageNum = Integer.parseInt(matcher.group(1));
+						// 循环解析所有精华问题页面
+						for (int i = 2; i <= pageNum; i++) {
+							userPage = downLoadPage.download(topicURL + "?page=" + i);
+							process(userPage);
+						}
 					}
 				} else {
 					logger.info("没有找到相关话题");
