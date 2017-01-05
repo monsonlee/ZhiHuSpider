@@ -1,6 +1,7 @@
 # ZhiHuSpider
-HttpcClient+HtmlCleaner+Xpath爬取知乎用户信息以及图片<br>
-(某一话题下，所有精华问题最高票用户的信息以及用户答案中的所有图片)
+HttpcClient+HtmlCleaner+Xpath爬取知乎用户信息以及图片<br/>
+某一话题下，所有精华问题最高票用户的信息以及用户答案中的所有图片<br/>
+用户信息:姓名、学校、专业、公司、行业、关注数、被关注数等等<br/>
 
 src/main/java/crawler<br/>
            ----------Spider.java         爬虫入口<br/>
@@ -23,7 +24,7 @@ src/main/java/utils<br/>
            ----------UserUtil.java       解析用户主页信息的工具类<br/>
 
 src/main/resources<br/>
-           ----------log4j.properties<br/>
+           ----------log4j.properties    日志配置<br/>
 
 src/test/java/crawler<br/>
            ----------TestSpider.java     爬虫测试类<br/>
